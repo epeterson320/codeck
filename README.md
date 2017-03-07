@@ -8,6 +8,8 @@ do the transformation of text to and from an ordered deck of cards.
 The whole process is
 Deck -> Permutation -> Factoradic -> Binary -> Bijective -> Text
 
-https://en.wikipedia.org/wiki/Factorial_number_system
-https://en.wikipedia.org/wiki/Bijective_numeration
-https://en.wikipedia.org/wiki/Lehmer_code
+Fun reading:
+
+* https://en.wikipedia.org/wiki/Factorial_number_system
+* https://en.wikipedia.org/wiki/Bijective_numeration
+* https://en.wikipedia.org/wiki/Lehmer_code
