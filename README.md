@@ -10,6 +10,7 @@ Deck -> Permutation -> Factoradic -> Decimal -> Base 37 -> Text
 
 Fun reading:
 
+* https://en.wikipedia.org/wiki/Codec
 * https://en.wikipedia.org/wiki/Factorial_number_system
 * https://en.wikipedia.org/wiki/Bijective_numeration
 * https://en.wikipedia.org/wiki/Lehmer_code
