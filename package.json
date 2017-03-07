@@ -1,0 +1,19 @@
+{
+  "name": "cryptodeck",
+  "version": "1.0.0",
+  "description": "Encode text into a deck of cards",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epeterson320/cryptodeck.git"
+  },
+  "author": "Eric Peterson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/epeterson320/cryptodeck/issues"
+  },
+  "homepage": "https://github.com/epeterson320/cryptodeck#readme"
+}
