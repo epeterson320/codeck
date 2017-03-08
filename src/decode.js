@@ -1,3 +1,5 @@
+import Big from 'big.js';
+
 export function deckToPermutation(deck, cardIndexes) {
   return deck.map(card => cardIndexes[card]);
 }
@@ -21,19 +23,22 @@ export function factoradicToNumber(factoradic) {
   // factoradic 341010
   // = 3x5! + 4x4! + 1x3! + 0x2! + 1x1! + 0x0!
   // = ((((3x5 + 4)x4 + 1)x3 + 0)x2 + 1)x1 + 0
+  const init = new Big(0);
   return factoradic
     .slice(0, -1) // Ignore the last element since it's always 0
-    .reduce((acc, el, i) => (acc + el) * (factoradic.length - 1 - i), 0);
+    .reduce((acc, el, i) => acc.plus(el).times(factoradic.length - 1 - i), init);
 }
 
 export function toBase(num, base) {
   let remaining = num;
   const result = [];
-  while (remaining > 0) {
-    const rem = remaining % base;
-    result.unshift(rem);
-    remaining -= rem;
-    remaining /= base;
+  const zero = new Big(0);
+
+  while (remaining.gt(zero)) {
+    const rem = remaining.mod(base);
+    result.unshift(parseInt(rem.toFixed()));
+    remaining = remaining.minus(rem);
+    remaining = remaining.div(base);
   }
   return result;
 }

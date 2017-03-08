@@ -1,20 +1,25 @@
+import Big from 'big.js';
+
 export function textToBase(text, charIndexes) {
   return text.split('').map(c => charIndexes[c]);
 }
 
 export function baseToNumber(digits, base) {
-  return digits.reduce((el, acc) => {
-    return (acc + el) * base;
-  }, 0) / base;
+  const init = new Big(0);
+  return digits
+    .reduce((acc, el) => acc.plus(el).times(base), init)
+    .div(base);
 }
 
 export function numberToFactoradic(number) {
   let radix = 1;
   let remaining = number;
   const factoradic = [];
-  while (remaining > 0) {
-    factoradic.unshift(remaining % radix);
-    remaining = Math.floor(remaining / radix);
+  const zero = new Big(0);
+  while (remaining.gt(zero)) {
+    const digit = remaining.mod(radix);
+    factoradic.unshift(parseInt(digit.toFixed()));
+    remaining = remaining.div(radix).round(0, 0);
     radix++;
   }
   return factoradic;

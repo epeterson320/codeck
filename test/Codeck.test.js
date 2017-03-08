@@ -29,4 +29,10 @@ describe('Codeck', () => {
     const codec = new Codeck(smallDeck, smallCharset);
     expect(codec.decode(['AS', 'KS', 'JS', 'QS'])).toBe('   X');
   });
+
+  test('runs symetrically on larger datasets', () => {
+    const codec = new Codeck();
+    const message = 'hello there';
+    expect(codec.decode(codec.encode(message)).trim()).toBe(message);
+  });
 });

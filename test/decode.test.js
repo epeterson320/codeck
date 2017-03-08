@@ -1,3 +1,4 @@
+import Big from 'big.js';
 import deckToText, {
   deckToPermutation,
   permutationToFactoradic,
@@ -41,19 +42,19 @@ describe('permutationToFactoradic', () => {
 
 describe('factoradicToNumber', () => {
   test('works on a small factoradic', () => {
-    expect(factoradicToNumber([2, 0, 0])).toBe(4);
+    expect(factoradicToNumber([2, 0, 0]).eq(new Big(4))).toBe(true);
   });
 
   test('works on the wikipedia example', () => {
-    expect(factoradicToNumber([3, 4, 1, 0, 1, 0])).toBe(463);
+    expect(factoradicToNumber([3, 4, 1, 0, 1, 0]).eq(new Big(463))).toBe(true);
   });
 });
 
 describe('toBase', () => {
   test('Works on small problems', () => {
-    expect(toBase(8, 2)).toEqual([1, 0, 0, 0]);
-    expect(toBase(0, 2)).toEqual([]);
-    expect(toBase(15, 2)).toEqual([1, 1, 1, 1]);
+    expect(toBase(new Big(8), 2)).toEqual([1, 0, 0, 0]);
+    expect(toBase(new Big(0), 2)).toEqual([]);
+    expect(toBase(new Big(15), 2)).toEqual([1, 1, 1, 1]);
   });
 });
 

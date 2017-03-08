@@ -1,3 +1,4 @@
+import Big from 'big.js';
 import textToDeck, {
   textToBase,
   baseToNumber,
@@ -26,14 +27,14 @@ describe('textToBase()', () => {
 
 describe('baseToNumber', () => {
   test('should work on small problems', () => {
-    expect(baseToNumber([1, 1, 1, 1], 2)).toBe(15);
-    expect(baseToNumber([1, 0, 0, 0], 2)).toBe(8);
+    expect(baseToNumber([1, 1, 1, 1], 2).eq(new Big(15))).toBe(true);
+    expect(baseToNumber([1, 0, 0, 0], 2).eq(new Big(8))).toBe(true);
   });
 });
 
 describe('numberToFactoradic', () => {
   test('should work on the wikipedia example', () => {
-    expect(numberToFactoradic(463)).toEqual([3, 4, 1, 0, 1, 0]);
+    expect(numberToFactoradic(new Big(463))).toEqual([3, 4, 1, 0, 1, 0]);
   });
 });
 
