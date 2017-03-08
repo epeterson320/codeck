@@ -20,7 +20,10 @@ export function numberToFactoradic(number) {
   return factoradic;
 }
 
-export function factoradicToPermutation(factoradic, sorted) {
+export function factoradicToPermutation(_factoradic, sorted) {
+  const factoradic = _factoradic.slice();
+  while (factoradic.length < sorted.length) factoradic.unshift(0);
+
   let remaining = sorted;
   return factoradic.map((digit) => {
     const el = remaining[digit];
@@ -31,4 +34,12 @@ export function factoradicToPermutation(factoradic, sorted) {
 
 export function permutationToDeck(permutation, cardOrder) {
   return permutation.map(i => cardOrder[i]);
+}
+
+export default function encode(text, charIndexes, cardOrder) {
+  const digits = textToBase(text, charIndexes);
+  const n = baseToNumber(digits, Object.keys(charIndexes).length);
+  const fact = numberToFactoradic(n);
+  const perm = factoradicToPermutation(fact, cardOrder.map((el, i) => i));
+  return permutationToDeck(perm, cardOrder);
 }

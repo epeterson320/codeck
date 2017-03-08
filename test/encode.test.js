@@ -1,4 +1,4 @@
-import {
+import textToDeck, {
   textToBase,
   baseToNumber,
   numberToFactoradic,
@@ -6,6 +6,15 @@ import {
   permutationToDeck,
 } from '../src/encode';
 import { Charsets } from '../src/Codeck';
+
+describe('encode', () => {
+  test('works on a small deck and charset', () => {
+    const cardOrder = ['W', 'X', 'Y', 'Z'];
+    const charIndexes = { ' ': 0, 'X': 1 };
+    const deck = textToDeck('   X', charIndexes, cardOrder);
+    expect(deck).toEqual(['W', 'X', 'Z', 'Y']);
+  });
+});
 
 describe('textToBase()', () => {
   test('should work on a small charset', () => {
@@ -34,6 +43,13 @@ describe('factoradicToPermutation', () => {
     const factoradic = [4, 0, 4, 1, 0, 0, 0];
     const permutation = factoradicToPermutation(factoradic, sorted);
     expect(permutation).toEqual([4, 0, 6, 2, 1, 3, 5]);
+  });
+
+  test('should insert leading zeroes as necessary', () => {
+    const sorted = [0, 1, 2, 3, 4, 5, 6];
+    const factoradic = [2, 2, 1, 0];
+    const permutation = factoradicToPermutation(factoradic, sorted);
+    expect(permutation).toEqual([0, 1, 2, 5, 6, 4, 3]);
   });
 });
 

@@ -1,10 +1,20 @@
-import {
+import deckToText, {
   deckToPermutation,
   permutationToFactoradic,
   factoradicToNumber,
   toBase,
   baseToText,
 } from '../src/decode';
+
+describe('decode', () => {
+  test('works on a small deck and charset', () => {
+    // these parameters work because 4! >= 2^4
+    const cardIndexes = { 'W': 0, 'X': 1, 'Y': 2, 'Z': 3 };
+    const charset = [' ', 'X'];
+    const message = deckToText(['W', 'X', 'Z', 'Y'], cardIndexes, charset, 4);
+    expect(message).toBe('   X');
+  });
+});
 
 describe('deckToPermutation', () => {
   test('works on a deck of three', () => {

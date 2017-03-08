@@ -1,5 +1,5 @@
-export function deckToPermutation(deck, indexesByCard) {
-  return deck.map(card => indexesByCard[card]);
+export function deckToPermutation(deck, cardIndexes) {
+  return deck.map(card => cardIndexes[card]);
 }
 
 export function permutationToFactoradic(_permutation) {
@@ -40,4 +40,14 @@ export function toBase(num, base) {
 
 export function baseToText(digits, charset) {
   return digits.map(d => charset[d]).join('');
+}
+
+export default function decode(deck, cardIndexes, charset, length) {
+  const perm = deckToPermutation(deck, cardIndexes);
+  const fact = permutationToFactoradic(perm);
+  const n = factoradicToNumber(fact);
+  const digits = toBase(n, charset.length);
+  let text = baseToText(digits, charset);
+  while (text.length < length) text = charset[0] + text;
+  return text;
 }
