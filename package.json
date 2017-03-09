@@ -4,6 +4,8 @@
   "description": "Encode text into a deck of cards",
   "main": "index.js",
   "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w & serve static",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -20,7 +22,14 @@
   "devDependencies": {
     "babel-jest": "^19.0.0",
     "babel-preset-es2015": "^6.22.0",
-    "big.js": "^3.1.3",
-    "eslint": "^3.17.1"
+    "eslint": "^3.17.1",
+    "rollup": "^0.41.4",
+    "rollup-plugin-commonjs": "^7.1.0",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-watch": "^3.2.2",
+    "serve": "^5.0.2"
+  },
+  "dependencies": {
+    "big.js": "^3.1.3"
   }
 }
