@@ -16,13 +16,16 @@ let timeoutID = -1;
 d3.select('#message').on('keyup', function() {
   messageState = this.value;
   clearTimeout(timeoutID);
-  timeoutID = setTimeout(updateCards, 300);
+  timeoutID = setTimeout(updateMessage, 300);
 });
 
-function updateCards() {
+function updateMessage() {
   const message = messageState.toLowerCase().trim();
   cardsState = codeck.encode(message);
+  renderCards();
+}
 
+function renderCards() {
   const cards = svg.selectAll('.card')
     .data(cardsState, c => c);
 
@@ -42,4 +45,4 @@ function updateCards() {
         });
 }
 
-timeoutID = setTimeout(updateCards, 300);
+timeoutID = setTimeout(renderCards, 300);

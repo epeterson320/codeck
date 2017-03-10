@@ -9,6 +9,10 @@ label[for=message] {
 
 #message {
   display: block;
+  font-size: 16px;
+  height: 32px;
+  width: 100%;
+  max-width: 480px;
 }
 
 .card {
