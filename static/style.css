@@ -2,3 +2,19 @@ h1 {
   font-size: 16px;
   color: steelblue;
 }
+
+label[for=message] {
+  color: green;
+}
+
+#message {
+  display: block;
+}
+
+.card rect {
+}
+
+.card text {
+  background-color: #e8e8e8;
+  font-size: 60px;
+}
