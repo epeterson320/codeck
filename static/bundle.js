@@ -173,43 +173,36 @@ var codeck = new Codeck();
 
 var svg = d3.select('#cards').append('svg').attr('width', '600px').attr('height', '400px');
 
-var cards = codeck.deck;
-var message = '';
+var cardsState = codeck.deck;
+var messageState = '';
 var timeoutID = -1;
 
 d3.select('#message').on('keyup', function () {
+  messageState = this.value;
   clearTimeout(timeoutID);
   timeoutID = setTimeout(updateCards, 300);
 });
 
 function updateCards() {
-  message = d3.select('#message').node().value.toLowerCase().trim();
-  cards = codeck.encode(message);
+  var message = messageState.toLowerCase().trim();
+  cardsState = codeck.encode(message);
 
-  var cardSel = svg.selectAll('.card').data(cards, function (c) {
+  var cards = svg.selectAll('.card').data(cardsState, function (c) {
     return c;
   });
 
-  var newcards = cardSel.enter().append('g').attr('class', 'card');
-
-  /*newcards.append('rect')
-    .attr('width', 36)
-    .attr('height', 36);*/
-
-  newcards.append('text').text(function (d) {
+  cards.enter().append('text').attr('class', 'card').attr('transform', 'translate(0, 0)').text(function (d) {
     return d;
-  })
-  //.attr('x', 8)
-  .attr('y', 60).attr('fill', function (d, i) {
+  }).attr('y', 60).attr('fill', function (d, i) {
     return i > 26 ? 'red' : 'black';
-  });
-
-  cardSel.transition().delay(function (d, i) {
+  }).merge(cards).transition().delay(function (d, i) {
     return i * 5;
   }).attr('transform', function (d) {
-    var i = cards.indexOf(d);
+    var i = cardsState.indexOf(d);
     return 'translate(' + i % 9 * 48 + ', ' + 60 * floor(i / 9) + ')';
   });
 }
+
+timeoutID = setTimeout(updateCards, 300);
 
 }(d3,Big));

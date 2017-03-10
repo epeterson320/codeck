@@ -11,10 +11,7 @@ label[for=message] {
   display: block;
 }
 
-.card rect {
-}
-
-.card text {
+.card {
   background-color: #e8e8e8;
   font-size: 60px;
 }
