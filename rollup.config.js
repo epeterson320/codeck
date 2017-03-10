@@ -7,6 +7,10 @@ export default {
   dest: 'static/bundle.js',
   format: 'iife',
   exports: 'none',
+  external: [
+    'big.js',
+    'd3',
+  ],
   globals: {
     'big.js': 'Big',
     'd3': 'd3',
