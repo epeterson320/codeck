@@ -132,7 +132,7 @@ var Charsets = {
 };
 
 var Decks = {
-  NO_JOKERS: ['🂡', '🂢', '🂣', '🂤', '🂥', '🂦', '🂧', '🂨', '🂩', '🂪', '🂫', '🂭', '🂮', '🂱', '🂲', '🂳', '🂴', '🂵', '🂶', '🂷', '🂸', '🂹', '🂺', '🂻', '🂽', '🂾', '🃁', '🃂', '🃃', '🃄', '🃅', '🃆', '🃇', '🃈', '🃉', '🃊', '🃋', '🃍', '🃎', '🃑', '🃒', '🃓', '🃔', '🃕', '🃖', '🃗', '🃘', '🃙', '🃚', '🃛', '🃝', '🃞']
+  NO_JOKERS: ['🂡', '🂢', '🂣', '🂤', '🂥', '🂦', '🂧', '🂨', '🂩', '🂪', '🂫', '🂭', '🂮', '🃁', '🃂', '🃃', '🃄', '🃅', '🃆', '🃇', '🃈', '🃉', '🃊', '🃋', '🃍', '🃎', '🃑', '🃒', '🃓', '🃔', '🃕', '🃖', '🃗', '🃘', '🃙', '🃚', '🃛', '🃝', '🃞', '🂱', '🂲', '🂳', '🂴', '🂵', '🂶', '🂷', '🂸', '🂹', '🂺', '🂻', '🂽', '🂾']
 };
 
 function Codeck(deck, charset) {
@@ -171,41 +171,114 @@ var floor = Math.floor;
 
 var codeck = new Codeck();
 
-var svg = d3.select('#cards').append('svg').attr('width', '600px').attr('height', '400px');
+var svg = d3.select('#cards svg').attr('width', '600px').attr('height', '400px');
 
-var cardsState = codeck.deck;
-var messageState = '';
-var timeoutID = -1;
+var messageInput = d3.select('#message');
+messageInput.node().maxLength = codeck.maxLength;
+messageInput.node().size = codeck.maxLength;
 
-d3.select('#message').on('keyup', function () {
-  messageState = this.value;
-  clearTimeout(timeoutID);
-  timeoutID = setTimeout(updateMessage, 300);
+var cards = {};
+codeck.deck.forEach(function (key, idx) {
+  cards[key] = { key: key, idx: idx, dragging: false, dx: 0, dy: 0 };
+});
+
+var cardOrder = codeck.deck.slice(); // copy of deck.
+
+var debounceInputId = -1;
+messageInput.on('keyup', function () {
+  clearTimeout(debounceInputId);
+  debounceInputId = setTimeout(updateMessage, 300);
 });
 
 function updateMessage() {
-  var message = messageState.toLowerCase().trim();
-  cardsState = codeck.encode(message);
+  var node = messageInput.node();
+  if (!node.checkValidity()) return;
+
+  var message = node.value.toLowerCase().trim();
+  codeck.encode(message).forEach(function (cardKey, i) {
+    cardOrder[i] = cardKey;
+    cards[cardKey].idx = i;
+  });
+  renderCards();
+}
+
+function moveCard(card, di) {
+  if (card + di > cardOrder.length || card + di < 0) return;
+
+  if (di > 0) {
+    for (var i = card.idx; i < card.idx + di; i++) {
+      cardOrder[i] = cardOrder[i + 1];
+      cards[cardOrder[i]].idx = i;
+    }
+  } else if (di < 0) {
+    for (var _i = card.idx; _i > card.idx + di; _i--) {
+      cardOrder[_i] = cardOrder[_i - 1];
+      cards[cardOrder[_i]].idx = _i;
+    }
+  }
+  cardOrder[card.idx + di] = card.key;
+  card.idx += di;
   renderCards();
 }
 
 function renderCards() {
-  var cards = svg.selectAll('.card').data(cardsState, function (c) {
-    return c;
-  });
-
-  cards.enter().append('text').attr('class', 'card').attr('transform', 'translate(0, 0)').text(function (d) {
-    return d;
-  }).attr('y', 60).attr('fill', function (d, i) {
-    return i > 26 ? 'red' : 'black';
-  }).merge(cards).transition().delay(function (d, i) {
-    return i * 5;
+  svg.selectAll('.card').transition().delay(function (d) {
+    return d.idx * 5;
+  }).filter(function (d) {
+    return !d.dragging;
   }).attr('transform', function (d) {
-    var i = cardsState.indexOf(d);
-    return 'translate(' + i % 9 * 48 + ', ' + 60 * floor(i / 9) + ')';
+    return 'translate(' + (d.idx % 9 * 48 + d.dx) + ', ' + (floor(d.idx / 9) * 60 + d.dy) + ')';
   });
 }
 
-timeoutID = setTimeout(renderCards, 300);
+function dragstarted(d) {
+  d.dragging = true;
+  d3.select(this).style('filter', 'url(#shadow)');
+}
+
+function dragged(d) {
+  d.dx += d3.event.dx;
+  d.dy += d3.event.dy;
+  if (d.dx > 28) {
+    d.dx -= 48;
+    moveCard(d, 1);
+  } else if (d.dx < -28) {
+    d.dx += 48;
+    moveCard(d, -1);
+  }
+  if (d.dy > 34) {
+    d.dy -= 60;
+    moveCard(d, 9);
+  } else if (d.dy < -34) {
+    d.dy += 60;
+    moveCard(d, -9);
+  }
+  d3.select(this).attr('transform', function (d) {
+    return 'translate(' + (d.idx % 9 * 48 + d.dx) + ', ' + (floor(d.idx / 9) * 60 + d.dy) + ')';
+  });
+}
+
+function dragended(d) {
+  d.dx = 0;
+  d.dy = 0;
+  d.dragging = false;
+  d3.select(this).style('filter', null);
+  renderCards();
+  var message = codeck.decode(cardOrder);
+  messageInput.node().value = message.trim();
+}
+
+function showCardsInit() {
+  svg.selectAll('.card').data(Object.values(cards), function (card) {
+    return card.key;
+  }).enter().append('text').attr('class', 'card').attr('transform', 'translate(0, 0)').text(function (card) {
+    return card.key;
+  }).attr('y', 60).attr('fill', function (d) {
+    return floor(d.idx / 13) % 2 !== 0 ? 'red' : 'black';
+  }).call(d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
+  renderCards();
+}
+
+setTimeout(showCardsInit, 300);
 
 }(d3,Big));
