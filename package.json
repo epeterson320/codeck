@@ -28,6 +28,7 @@
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^7.1.0",
     "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2",
     "serve": "^5.0.2"
   },
