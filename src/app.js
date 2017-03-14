@@ -1,16 +1,22 @@
-import * as d3 from 'd3';
+import {
+  select,
+  event as currentEvent,
+} from 'd3-selection';
+import { drag } from 'd3-drag';
+import 'd3-transition'; // defines selection.transition()
+
 import Codeck from './Codeck';
-import installServiceWorker from './worker';
+// import installServiceWorker from './worker';
 
 const { floor } = Math;
 const codeck = new Codeck();
 
-const svg = d3.select('#cards svg')
+const svg = select('#cards svg')
   .attr('width', '600px')
   .attr('height', '400px');
 
-const messageInput = d3.select('#message');
-const cleanedMessageSpan = d3.select('.cleanednotification');
+const messageInput = select('#message');
+const cleanedMessageSpan = select('.cleanednotification');
 
 messageInput.node().maxLength = codeck.maxLength;
 messageInput.node().size = codeck.maxLength;
@@ -83,12 +89,13 @@ function renderCards() {
 
 function dragstarted(d) {
   d.dragging = true;
-  d3.select(this).style('filter', 'url(#shadow)');
+  currentEvent.sourceEvent.preventDefault();
+  select(this).style('filter', 'url(#shadow)');
 }
 
 function dragged(d) {
-  d.dx += d3.event.dx;
-  d.dy += d3.event.dy;
+  d.dx += currentEvent.dx;
+  d.dy += currentEvent.dy;
   if (d.dx > 28) {
     d.dx -= 48;
     moveCard(d, 1);
@@ -103,7 +110,7 @@ function dragged(d) {
     d.dy += 60;
     moveCard(d, -9);
   }
-  d3.select(this).attr('transform', d =>
+  select(this).attr('transform', d =>
     `translate(${d.idx % 9 * 48 + d.dx}, ${floor(d.idx / 9) * 60 + d.dy})`);
 }
 
@@ -111,7 +118,7 @@ function dragended(d) {
   d.dx = 0;
   d.dy = 0;
   d.dragging = false;
-  d3.select(this).style('filter', null);
+  select(this).style('filter', null);
   renderCards();
   const message = codeck.decode(cardOrder);
   messageInput.node().value = message.trim().toUpperCase();
@@ -127,7 +134,7 @@ function showCardsInit() {
       .text(card => card.key)
       .attr('y', 60)
       .attr('fill', d => (floor(d.idx / 13) % 2 !== 0) ? 'red' : 'black')
-      .call(d3.drag()
+      .call(drag()
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended));
@@ -136,4 +143,4 @@ function showCardsInit() {
 
 setTimeout(showCardsInit, 25);
 
-installServiceWorker();
+// installServiceWorker();
