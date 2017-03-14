@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import Codeck from './Codeck';
+import installServiceWorker from './worker';
 
 const { floor } = Math;
 const codeck = new Codeck();
@@ -134,3 +135,5 @@ function showCardsInit() {
 }
 
 setTimeout(showCardsInit, 25);
+
+installServiceWorker();

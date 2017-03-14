@@ -7,17 +7,9 @@ export default {
   dest: 'dist/bundle.js',
   format: 'iife',
   exports: 'none',
-  external: [
-    'big.js',
-    'd3',
-  ],
-  globals: {
-    'big.js': 'Big',
-    'd3': 'd3',
-  },
   plugins: [
-    cjsToES6(), // libraries go from commonjs to es6
-    resolve(), // our source code and transpiled libraries use es6
+    cjsToES6(), // transpile commonjs libraries to es6
+    resolve(), // load es6 modules correctly
     babel({ // generate es5 for browser compatibility
       exclude: 'node_modules/**' // only transpile our source code
     }),
