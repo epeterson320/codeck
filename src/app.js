@@ -9,6 +9,8 @@ const svg = d3.select('#cards svg')
   .attr('height', '400px');
 
 const messageInput = d3.select('#message');
+const cleanedMessageSpan = d3.select('.cleanednotification');
+
 messageInput.node().maxLength = codeck.maxLength;
 messageInput.node().size = codeck.maxLength;
 
@@ -25,15 +27,29 @@ messageInput.on('keyup', () => {
   debounceInputId = setTimeout(updateMessage, 300);
 });
 
-function updateMessage() {
-  const node = messageInput.node();
-  if (!node.checkValidity()) return;
+function cleanMessage(text) {
+  return text.toUpperCase().trim()
+    .replace(/['"]/g, ',')
+    .replace(/[!?]/g, '.')
+    .replace(/[^A-Z0-9,. ]/g, '');
+}
 
-  const message = node.value.toLowerCase().trim();
-  codeck.encode(message).forEach((cardKey, i) => {
+function updateMessage() {
+  const typedMessage = messageInput.node().value;
+  const cleanedMessage = cleanMessage(messageInput.node().value);
+  const newOrder = codeck.encode(cleanedMessage.toLowerCase());
+  newOrder.forEach((cardKey, i) => {
     cardOrder[i] = cardKey;
     cards[cardKey].idx = i;
   });
+  if (typedMessage === cleanedMessage) {
+    cleanedMessageSpan.classed('hide', true);
+  } else {
+    cleanedMessageSpan
+      .classed('hide', false)
+      .select('span')
+        .text(cleanedMessage);
+  }
   renderCards();
 }
 
@@ -97,7 +113,8 @@ function dragended(d) {
   d3.select(this).style('filter', null);
   renderCards();
   const message = codeck.decode(cardOrder);
-  messageInput.node().value = message.trim();
+  messageInput.node().value = message.trim().toUpperCase();
+  cleanedMessageSpan.classed('hide', true);
 }
 
 function showCardsInit() {
