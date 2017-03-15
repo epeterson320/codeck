@@ -2,11 +2,13 @@ import {
   select,
   event as currentEvent,
 } from 'd3-selection';
-import { drag } from 'd3-drag';
+import { drag, dragDisable } from 'd3-drag';
 import 'd3-transition'; // defines selection.transition()
 
 import Codeck from './Codeck';
 // import installServiceWorker from './worker';
+
+dragDisable(window);
 
 const { floor } = Math;
 const codeck = new Codeck();
@@ -89,7 +91,6 @@ function renderCards() {
 
 function dragstarted(d) {
   d.dragging = true;
-  currentEvent.sourceEvent.preventDefault();
   select(this).style('filter', 'url(#shadow)');
 }
 
