@@ -144,4 +144,8 @@ function showCardsInit() {
 
 setTimeout(showCardsInit, 100);
 
-// installServiceWorker();
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('worker.js');
+  });
+}
