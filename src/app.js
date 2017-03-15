@@ -31,7 +31,7 @@ const cardOrder = codeck.deck.slice(); // copy of deck.
 let debounceInputId = -1;
 messageInput.on('keyup', () => {
   clearTimeout(debounceInputId);
-  debounceInputId = setTimeout(updateMessage, 25);
+  debounceInputId = setTimeout(updateMessage, 100);
 });
 
 function cleanMessage(text) {
@@ -141,6 +141,6 @@ function showCardsInit() {
   renderCards();
 }
 
-setTimeout(showCardsInit, 25);
+setTimeout(showCardsInit, 100);
 
 // installServiceWorker();
