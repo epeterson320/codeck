@@ -35,8 +35,7 @@ messageInput.on('keyup', () => {
 
 function cleanMessage(text) {
   return text.toUpperCase().trim()
-    .replace(/['"]/g, ',')
-    .replace(/[!?]/g, '.')
+    .replace(/[!?]+/g, '.') // replace !, ?, !!, or !?!?! with a single period.
     .replace(/[^A-Z0-9,. ]/g, '');
 }
 
