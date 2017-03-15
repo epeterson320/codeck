@@ -1,6 +1,6 @@
 {
   "short_name": "Codeck",
-  "name": "Codeck — Card Encoder and Decoder",
+  "name": "Codeck — Encode a Message in a Deck of Cards",
   "start_url": "index.html?launcher=true",
   "theme_color": "#db2535",
   "background_color": "#efefef",
