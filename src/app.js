@@ -30,7 +30,7 @@ const cardOrder = codeck.deck.slice(); // copy of deck.
 let debounceInputId = -1;
 messageInput.on('keyup', () => {
   clearTimeout(debounceInputId);
-  debounceInputId = setTimeout(updateMessage, 100);
+  debounceInputId = setTimeout(updateMessage, 25);
 });
 
 function cleanMessage(text) {
@@ -140,7 +140,7 @@ function showCardsInit() {
   renderCards();
 }
 
-setTimeout(showCardsInit, 100);
+setTimeout(showCardsInit, 25);
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
