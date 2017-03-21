@@ -126,12 +126,20 @@ function dragended(d) {
 function showCardsInit() {
   svg.selectAll('.card')
     .data(Object.values(cards), card => card.key)
-    .enter().append('text')
+    .enter().append('g')
       .attr('class', 'card')
       .attr('transform', 'translate(0, 0)')
-      .text(card => card.key)
-      .attr('y', 60)
-      .attr('fill', d => (floor(d.idx / 13) % 2 !== 0) ? 'red' : 'black')
+      .each(function() {
+        const g = select(this);
+        g.append('rect')
+          .attr('fill', 'white')
+          .style('width', 36)
+          .style('height', 46);
+        g.append('text')
+          .text(card => card.key)
+          .attr('y', 40)
+          .attr('fill', d => (floor(d.idx / 13) % 2 !== 0) ? 'red' : 'black');
+      })
       .call(drag()
         .on('start', dragstarted)
         .on('drag', dragged)
