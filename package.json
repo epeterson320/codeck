@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w & serve",
+    "start": "rollup -c -w & serve",
     "test": "jest",
     "test:watch": "jest --watch"
   },
