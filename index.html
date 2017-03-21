@@ -25,23 +25,27 @@
       margin: 0;
       padding: 0;
       height: 48px;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
+      position: fixed;
+      z-index: 1;
     }
-    header h1 {
+    h1 {
       font-size: 34px;
       font-weight: normal;
       margin: 0;
-      padding: 8px;
       float: left;
     }
-    header a {
+    a[rel="author"] {
       font-size: 16px;
       color: rgba(255, 255, 255, 0.7);
-      padding: 16px;
+      padding: 8px;
       float: right;
     }
 
     main {
-      margin: 16px;
+      position: relative;
+      top: 48px;
+      padding: 16px;
     }
     h2 {
       margin: 16px 0;
@@ -140,7 +144,15 @@
     us to what you're looking at now.</p>
 
     <h3>How long can the messages be?</h3>
-    <p>That depends on two things: How many cards are in a deck, and how many letters are in your alphabet. Since there are fifty-two cards in a deck, there are <code>52! ≈ 8✖️10<sup>57</sup></code> possible orders for a deck of cards. If your alphabet has 39 letters (26 proper letters, 10 digits, space, quote, and period), then you will need to be able to store 39<sup>l</sup> messages, where <i>l</i> is the maximum length of a message.</p>
+    <p>
+      That depends on two things: How many cards are in a deck, and how many
+      letters are in your alphabet. Since there are fifty-two cards in a deck,
+      there are <code>52! ≈ 8✖️10<sup>57</sup></code> possible orders for a deck
+      of cards. If your alphabet has 39 letters (26 proper letters, 10 digits,
+      space, quote, and period), then you will need to be able to store
+      39<sup>l</sup> messages, where <i>l</i> is the maximum length of a
+      message.
+    </p>
     <p>This gives us the following formula to solve for <i>l</i>:</p>
     <code>52! ≥ 39<sup>l</sup></code>
     <p>
@@ -159,7 +171,7 @@
     <p>The styles and code are my own, but I got a lot of help from a data
       visualization library called <a href="https://d3js.org/">D3.js</a> (not
       affiliated with this project). All the code I wrote is available on Github
-      Github at <a href="https://github.com/epeterson320/codeck">Codeck</a>.</p>
+      at <a href="https://github.com/epeterson320/codeck">Codeck</a>.</p>
     </article>
   </main>
 
