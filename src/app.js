@@ -88,7 +88,9 @@ function renderCards() {
 function dragstarted(d) {
   d.dragging = true;
   currentEvent.sourceEvent.preventDefault();
-  select(this).style('filter', 'url(#shadow)');
+  select(this)
+    .style('filter', 'url(#shadow)')
+    .raise();
 }
 
 function dragged(d) {

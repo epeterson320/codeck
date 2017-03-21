@@ -143,10 +143,17 @@
     <p>That depends on two things: How many cards are in a deck, and how many letters are in your alphabet. Since there are fifty-two cards in a deck, there are <code>52! ≈ 8✖️10<sup>57</sup></code> possible orders for a deck of cards. If your alphabet has 39 letters (26 proper letters, 10 digits, space, quote, and period), then you will need to be able to store 39<sup>l</sup> messages, where <i>l</i> is the maximum length of a message.</p>
     <p>This gives us the following formula to solve for <i>l</i>:</p>
     <code>52! ≥ 39<sup>l</sup></code>
-    <p>Using a branch of nonsense math called logarithms, this equation can be solved, giving us a maximum length of 42 characters. You can figure this on a calculator by typing in <code>log(52!)/log(39)</code>. The answer will be about 42.68, which rounds down, since it doesn't make sense to encode part of a character.</p>
+    <p>
+      Using a branch of nonsense math called logarithms, this equation can be
+      solved, giving us a maximum length of 42 characters. You can figure this
+      on a calculator by typing in <code>log(52!)/log(39)</code> or asking Siri,
+      "What's the log of 52 factorial divided by the log of 39?" The answer will
+      be about 42.68, which rounds down to 42, since it doesn't make sense to
+      encode part of a character.
+    </p>
 
     <h3>Why is it named Codeck?</h3>
-    <p>A <i>codec</i> is a word for something that encodes and decodes messages,
+    <p>A <b>codec</b> is a word for something that encodes and decodes messages,
       and I'm not one to pass up a good pun. Or a bad one, apparently.</p>
     <h3>How was this built?</h3>
     <p>The styles and code are my own, but I got a lot of help from a data
