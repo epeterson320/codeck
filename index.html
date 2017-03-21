@@ -5,36 +5,70 @@
   <title>Codeck — Encode a Message in a Deck of Cards</title>
   <meta name="theme-color" content="#db2535">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Codeck is a simple tool to translate message to and from an ordered deck of cards."
+  <meta name="description" content="Codeck is a simple tool to translate message to and from an ordered deck of cards.">
   <link rel="manifest" href="manifest.json">
   <link rel="shortcut icon" href="images/icon16.png" type="image/png">
   <style>
     body {
       font-family: sans-serif;
-      background-color: #efefef;
+      font-size: 14px;
+      background-color: #fafafa;
       color: rgba(0, 0, 0, 0.87);
+      margin: 0;
+      padding: 0;
     }
 
-    h1 {
+    header {
+      width: 100%;
+      background-color: #388E3C;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      height: 48px;
+    }
+    header h1 {
+      font-size: 34px;
+      font-weight: normal;
+      margin: 0;
+      padding: 8px;
+      float: left;
+    }
+    header a {
       font-size: 16px;
-      color: rgba(0, 0, 0, 0.87);;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 16px;
+      float: right;
     }
 
-    label[for=message] {
-      color: green;
+    main {
+      margin: 16px;
     }
-
+    h2 {
+      margin: 16px 0;
+    }
+    label, .label {
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.54);
+    }
+    input {
+      margin-bottom: 16px;
+    }
     #message {
       display: block;
       font-size: 16px;
       height: 32px;
       max-width: 100%;
     }
-
-    .hide {
-      display: none;
+    #cards {
+      max-width: 512px;
+      background-color: #4CAF50;
     }
-
+    .cleanednotification {
+      transition: opacity 0.2s ease-in-out;
+    }
+    .hide {
+      opacity: 0;
+    }
     .cleaned {
       margin-left: 8px;
       font-family: monospace;
@@ -42,39 +76,85 @@
       text-transform: uppercase;
       background-color: #EEE;
     }
-
     .card {
       background-color: #e8e8e8;
       font-size: 60px;
     }
+    article {
+      max-width: 30em;
+    }
   </style>
 </head>
 <body>
-  <h1>Codeck</h1>
-  <form>
-    <h2><label for="message">Secret Message</label></h2>
-    <input id="message"
-      type="text"
-      autofocus
-      inputmode="latin-prose"
-      pattern="[a-zA-Z0-9\.,\s]*"
-      placeholder="Some secret message"
-      />
-    <p class="cleanednotification hide">
-      Not all characters can be encoded. The actual encoded message is
-      <span class="cleaned"></span>
-    </p>
-    <h2>Encoded Message</h2>
-    <div id="cards">
-      <svg>
-        <defs>
-          <filter id="shadow">
-            <feDropShadow dx="4" dy="8" stdDeviation="4" />
-          </filter>
-        </defs>
-      </svg>
-    </div>
-  </form>
+  <header>
+    <h1>Codeck</h1>
+    <a href="/" rel="author">Eric Peterson</a>
+  </header>
+  <main>
+    <form>
+      <label for="message">Secret Message</label>
+      <input id="message"
+        type="text"
+        autofocus
+        inputmode="latin-prose"
+        pattern="[a-zA-Z0-9\.,\s]*"
+        placeholder="Some secret message"
+        />
+      <p class="cleanednotification hide">
+        Not all characters can be encoded. The actual encoded message is
+        <samp class="cleaned"></samp>
+      </p>
+      <span class="label">Encoded Message</span>
+      <div id="cards">
+        <svg>
+          <defs>
+            <filter id="shadow">
+              <feDropShadow dx="4" dy="8" stdDeviation="4" />
+            </filter>
+          </defs>
+        </svg>
+      </div>
+    </form>
+
+    <article>
+    <h3>What's going on here?</h3>
+    <p>As a kid, I loved secret messages. I had books on how to write secret
+    messages for your friends that <em>nobody</em> could decode. I sent secret
+    messages to my parents, my classmates, my brother, and anyone else who
+    would put up with me. Then I grew up, and a few years ago while playing
+    cards, I had an idea. More like a question, really: could you encode a
+    message in a deck of cards? Is that mathematically possible?</p>
+    <p>A few weeks ago, I realized <em>hey</em>, you can Google that sort of
+    thing. Google lead me to a stack overflow article called
+    <a href="http://stackoverflow.com/questions/1506078/fast-permutation-number-permutation-mapping-algorithms">
+    Fast permutation -> number -> permutation mapping algorithms</a>.
+    That introduced me to the word I was looking for: <a
+    href="https://en.wikipedia.org/wiki/Factorial_number_system">Factorial
+    number system</a>, and the related concept of <a
+    href="https://en.wikipedia.org/wiki/Lehmer_code">Lehmer codes</a>, so I
+    went straight to Wikipedia and began to figure out what I had gotten myself
+    into. The good news was that mathematicians have studied this thing and
+    come up with some great research.</p>
+    <p>Once I figured out how it was possible to encode a message in a deck of
+    cards, I made this web app to demonstrate it was possible, and that brings
+    us to what you're looking at now.</p>
+
+    <h3>How long can the messages be?</h3>
+    <p>That depends on two things: How many cards are in a deck, and how many letters are in your alphabet. Since there are fifty-two cards in a deck, there are <code>52! ≈ 8✖️10<sup>57</sup></code> possible orders for a deck of cards. If your alphabet has 39 letters (26 proper letters, 10 digits, space, quote, and period), then you will need to be able to store 39<sup>l</sup> messages, where <i>l</i> is the maximum length of a message.</p>
+    <p>This gives us the following formula to solve for <i>l</i>:</p>
+    <code>52! ≥ 39<sup>l</sup></code>
+    <p>Using a branch of nonsense math called logarithms, this equation can be solved, giving us a maximum length of 42 characters. You can figure this on a calculator by typing in <code>log(52!)/log(39)</code>. The answer will be about 42.68, which rounds down, since it doesn't make sense to encode part of a character.</p>
+
+    <h3>Why is it named Codeck?</h3>
+    <p>A <i>codec</i> is a word for something that encodes and decodes messages,
+      and I'm not one to pass up a good pun. Or a bad one, apparently.</p>
+    <h3>How was this built?</h3>
+    <p>The styles and code are my own, but I got a lot of help from a data
+      visualization library called <a href="https://d3js.org/">D3.js</a> (not
+      affiliated with this project). All the code I wrote is available on Github
+      Github at <a href="https://github.com/epeterson320/codeck">Codeck</a>.</p>
+    </article>
+  </main>
 
   <script src="dist/bundle.js" async></script>
   <script>

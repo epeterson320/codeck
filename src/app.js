@@ -11,7 +11,7 @@ const { floor } = Math;
 const codeck = new Codeck();
 
 const svg = select('#cards svg')
-  .attr('width', '600px')
+  .attr('width', '512px')
   .attr('height', '400px');
 
 const messageInput = select('#message');
@@ -52,7 +52,7 @@ function updateMessage() {
   } else {
     cleanedMessageSpan
       .classed('hide', false)
-      .select('span')
+      .select('samp')
         .text(cleanedMessage);
   }
   renderCards();
