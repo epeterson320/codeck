@@ -62,15 +62,20 @@
       font-size: 16px;
       height: 32px;
       max-width: 100%;
+      margin-bottom: 0;
     }
     #cards {
       max-width: 512px;
       background-color: #4CAF50;
     }
     .cleanednotification {
-      transition: opacity 0.2s ease-in-out;
+      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in;
+      margin: 4px 0 12px;
+      color: #FF1744;
+      font-size: 12px;
     }
     .hide {
+      transform: translate(0, -12px);
       opacity: 0;
     }
     .cleaned {
@@ -96,7 +101,7 @@
   </header>
   <main>
     <form>
-      <label for="message">Secret Message</label>
+      <label for="message">Secret Message (Not case sensitive)</label>
       <input id="message"
         type="text"
         autofocus
