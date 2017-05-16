@@ -4,10 +4,15 @@
   "description": "Encode text into a deck of cards",
   "main": "index.js",
   "scripts": {
-    "build": "rollup -c",
-    "start": "rollup -c -w & serve",
+    "clean": "rm -rf dist",
+    "build": "webpack --env=prod && cp src/index.html dist",
+    "postbuild": "cp -r images src/index.html dist",
+    "start": "webpack-dev-server --env=dev &>/dev/null &",
+    "stop": "pkill -f webpack-dev-server || true",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "lint": "standard --verbose | snazzy",
+    "predeploy": "cp -r .circleci dist",
+    "deploy": "gh-pages --dotfiles -d dist"
   },
   "repository": {
     "type": "git",
@@ -21,20 +26,23 @@
   "homepage": "https://github.com/epeterson320/cryptodeck#readme",
   "devDependencies": {
     "babel-jest": "^20.0.1",
-    "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-es2015": "^6.22.0",
     "eslint": "^3.17.1",
     "jest": "^20.0.1",
-    "rollup": "^0.41.4",
-    "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-uglify": "^1.0.1",
-    "rollup-watch": "^3.2.2",
-    "serve": "^5.0.2"
+    "serve": "^5.0.2",
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.2",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
     "big.js": "^3.1.3",
     "d3": "^4.7.1"
+  },
+  "standard": {
+    "env": [
+      "jest",
+      "browser"
+    ]
   }
 }
