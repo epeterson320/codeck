@@ -2,7 +2,11 @@ const CACHE_NAME = 'my-site-cache-v1'
 const urlsToCache = [
   './',
   'index.html',
-  'bundle.js'
+  'bundle.js',
+  'images/cards.png',
+  'images/cards@1.5x.png',
+  'images/cards@2x.png',
+  'images/cards@3x.png'
 ]
 
 self.addEventListener('install', (e) => {
