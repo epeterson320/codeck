@@ -1,0 +1,81 @@
+@import '~normalize-scss/sass/normalize/import-now';
+@import 'cards';
+
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+  background-color: #fafafa;
+  color: rgba(0, 0, 0, 0.87);
+  margin: 0;
+  padding: 0;
+}
+header {
+  width: 100%;
+  background-color: #388E3C;
+  color: #fff;
+  margin: 0;
+  padding: 0 8px;
+  height: 48px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
+  z-index: 1;
+}
+h1 {
+  font-size: 34px;
+  font-weight: normal;
+  margin: 0;
+  float: left;
+}
+a[rel="author"] {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px;
+  float: right;
+}
+main {
+  padding: 16px;
+}
+h2 {
+  margin: 16px 0;
+}
+label, .label {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+}
+input {
+  margin-bottom: 16px;
+}
+#message {
+  display: block;
+  font-size: 16px;
+  height: 32px;
+  max-width: calc(100% - 32px);
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+#cards {
+  position: relative;
+  background-color: #4CAF50;
+  border-radius: 4px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+.cleanednotification {
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in;
+  margin: 4px 0 12px;
+  color: #FF1744;
+  font-size: 12px;
+}
+.hide {
+  transform: translate(0, -12px);
+  opacity: 0;
+}
+.cleaned {
+  margin-left: 8px;
+  font-family: monospace;
+  color: #448;
+  text-transform: uppercase;
+  background-color: #EEE;
+}
+article {
+  width: 30em;
+  max-width: 100%;
+}

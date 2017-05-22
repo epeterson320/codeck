@@ -8,94 +8,6 @@
   <meta name="description" content="Codeck is a simple tool to translate message to and from an ordered deck of cards.">
   <link rel="manifest" href="manifest.json">
   <link rel="shortcut icon" href="images/icon16.png" type="image/png">
-  <style>
-    body {
-      font-family: sans-serif;
-      font-size: 14px;
-      background-color: #fafafa;
-      color: rgba(0, 0, 0, 0.87);
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      width: 100%;
-      background-color: #388E3C;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-      height: 48px;
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
-      position: fixed;
-      z-index: 1;
-    }
-    h1 {
-      font-size: 34px;
-      font-weight: normal;
-      margin: 0;
-      float: left;
-    }
-    a[rel="author"] {
-      font-size: 16px;
-      color: rgba(255, 255, 255, 0.7);
-      padding: 8px;
-      float: right;
-    }
-
-    main {
-      position: relative;
-      top: 48px;
-      padding: 16px;
-    }
-    h2 {
-      margin: 16px 0;
-    }
-    label, .label {
-      font-size: 12px;
-      color: rgba(0, 0, 0, 0.54);
-    }
-    input {
-      margin-bottom: 16px;
-    }
-    #message {
-      display: block;
-      font-size: 16px;
-      height: 32px;
-      max-width: 100%;
-      margin-bottom: 0;
-    }
-    #cards {
-      max-width: 512px;
-      background-color: #4CAF50;
-    }
-    svg {
-      overflow: visible;
-    }
-    .cleanednotification {
-      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in;
-      margin: 4px 0 12px;
-      color: #FF1744;
-      font-size: 12px;
-    }
-    .hide {
-      transform: translate(0, -12px);
-      opacity: 0;
-    }
-    .cleaned {
-      margin-left: 8px;
-      font-family: monospace;
-      color: #448;
-      text-transform: uppercase;
-      background-color: #EEE;
-    }
-    .card {
-      background-color: #e8e8e8;
-      font-size: 60px;
-    }
-    article {
-      max-width: 30em;
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -116,15 +28,8 @@
         Not all characters can be encoded. The actual encoded message is
         <samp class="cleaned"></samp>
       </p>
-      <span class="label">Encoded Message</span>
+      <span class="label">Encoded Message (Drag cards to change)</span>
       <div id="cards">
-        <svg>
-          <defs>
-            <filter id="shadow">
-              <feDropShadow dx="4" dy="8" stdDeviation="4" />
-            </filter>
-          </defs>
-        </svg>
       </div>
     </form>
 
@@ -164,12 +69,10 @@
     <p>This gives us the following formula to solve for <i>l</i>:</p>
     <code>52! ≥ 39<sup>l</sup></code>
     <p>
-      Using basic logarithms, this equation can be solved for l, giving us a
-      maximum length of 42 characters. You can figure this on a calculator by
-      typing in <code>log(52!)/log(39)</code> or asking Siri, "What's the log
-      of 52 factorial divided by the log of 39?" The answer will be about
-      42.68, which rounds down to 42, since it doesn't make sense to encode part
-      of a character.
+      This equation can be solved for l by asking Siri, "What's the log of 52
+      factorial divided by the log of 39?" The answer will be about 42.68, which
+      rounds down to a maximum length of 42 characters, since it doesn't make
+      sense to encode part of a character.
     </p>
 
     <h3>Why is it named Codeck?</h3>
