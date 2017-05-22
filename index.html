@@ -8,95 +8,7 @@
   <meta name="description" content="Codeck is a simple tool to translate message to and from an ordered deck of cards.">
   <link rel="manifest" href="manifest.json">
   <link rel="shortcut icon" href="images/icon16.png" type="image/png">
-  <style>
-    body {
-      font-family: sans-serif;
-      font-size: 14px;
-      background-color: #fafafa;
-      color: rgba(0, 0, 0, 0.87);
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      width: 100%;
-      background-color: #388E3C;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-      height: 48px;
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
-      position: fixed;
-      z-index: 1;
-    }
-    h1 {
-      font-size: 34px;
-      font-weight: normal;
-      margin: 0;
-      float: left;
-    }
-    a[rel="author"] {
-      font-size: 16px;
-      color: rgba(255, 255, 255, 0.7);
-      padding: 8px;
-      float: right;
-    }
-
-    main {
-      position: relative;
-      top: 48px;
-      padding: 16px;
-    }
-    h2 {
-      margin: 16px 0;
-    }
-    label, .label {
-      font-size: 12px;
-      color: rgba(0, 0, 0, 0.54);
-    }
-    input {
-      margin-bottom: 16px;
-    }
-    #message {
-      display: block;
-      font-size: 16px;
-      height: 32px;
-      max-width: 100%;
-      margin-bottom: 0;
-    }
-    #cards {
-      max-width: 512px;
-      background-color: #4CAF50;
-    }
-    svg {
-      overflow: visible;
-    }
-    .cleanednotification {
-      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in;
-      margin: 4px 0 12px;
-      color: #FF1744;
-      font-size: 12px;
-    }
-    .hide {
-      transform: translate(0, -12px);
-      opacity: 0;
-    }
-    .cleaned {
-      margin-left: 8px;
-      font-family: monospace;
-      color: #448;
-      text-transform: uppercase;
-      background-color: #EEE;
-    }
-    .card {
-      background-color: #e8e8e8;
-      font-size: 60px;
-    }
-    article {
-      max-width: 30em;
-    }
-  </style>
-</head>
+<style>/*! normalize-scss | MIT/GPLv2 License | bit.ly/normalize-scss */html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure{display:block}figure{margin:1em 40px}hr{-webkit-box-sizing:content-box;box-sizing:content-box;height:0;overflow:visible}main{display:block}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}input{overflow:visible}[type=checkbox],[type=radio]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}fieldset{padding:.35em .75em .625em}legend{-webkit-box-sizing:border-box;box-sizing:border-box;display:table;max-width:100%;padding:0;color:inherit;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}details{display:block}summary{display:list-item}menu{display:block}canvas{display:inline-block}[hidden],template{display:none}.card{position:absolute;background-image:url("images/cards.png");width:36px;height:54px;margin:2px;display:inline-block}@media screen and (-webkit-min-device-pixel-ratio:1.5),screen and (min-device-pixel-ratio:1.5),screen and (min-resolution:1.5dppx){.card{background-image:url("images/cards@2x.png");background-size:504px 225px}}@media screen and (-webkit-min-device-pixel-ratio:2),screen and (min-device-pixel-ratio:2),screen and (min-resolution:2dppx){.card{background-image:url("images/cards@2x.png");background-size:504px 225px}}@media screen and (-webkit-min-device-pixel-ratio:3),screen and (min-device-pixel-ratio:3),screen and (min-resolution:3dppx){.card{background-image:url("images/cards@3x.png");background-size:504px 225px}}.drag{-webkit-box-shadow:0 4px 4px rgba(0,0,0,.4);box-shadow:0 4px 4px rgba(0,0,0,.4)}.sa{background-position:0 0}.s2{background-position:-39px 0}.s3{background-position:-78px 0}.s4{background-position:-117px 0}.s5{background-position:-156px 0}.s6{background-position:-195px 0}.s7{background-position:-234px 0}.s8{background-position:-273px 0}.s9{background-position:-312px 0}.s10{background-position:-351px 0}.sj{background-position:-390px 0}.sq{background-position:-429px 0}.sk{background-position:-468px 0}.ha{background-position:0 -57px}.h2{background-position:-39px -57px}.h3{background-position:-78px -57px}.h4{background-position:-117px -57px}.h5{background-position:-156px -57px}.h6{background-position:-195px -57px}.h7{background-position:-234px -57px}.h8{background-position:-273px -57px}.h9{background-position:-312px -57px}.h10{background-position:-351px -57px}.hj{background-position:-390px -57px}.hq{background-position:-429px -57px}.hk{background-position:-468px -57px}.da{background-position:0 -114px}.d2{background-position:-39px -114px}.d3{background-position:-78px -114px}.d4{background-position:-117px -114px}.d5{background-position:-156px -114px}.d6{background-position:-195px -114px}.d7{background-position:-234px -114px}.d8{background-position:-273px -114px}.d9{background-position:-312px -114px}.d10{background-position:-351px -114px}.dj{background-position:-390px -114px}.dq{background-position:-429px -114px}.dk{background-position:-468px -114px}.ca{background-position:0 -171px}.c2{background-position:-39px -171px}.c3{background-position:-78px -171px}.c4{background-position:-117px -171px}.c5{background-position:-156px -171px}.c6{background-position:-195px -171px}.c7{background-position:-234px -171px}.c8{background-position:-273px -171px}.c9{background-position:-312px -171px}.c10{background-position:-351px -171px}.cj{background-position:-390px -171px}.cq{background-position:-429px -171px}.ck{background-position:-468px -171px}body{font-family:sans-serif;font-size:14px;background-color:#fafafa;color:rgba(0,0,0,.87);margin:0;padding:0}header{width:100%;background-color:#388e3c;color:#fff;margin:0;padding:0 8px;height:48px;-webkit-box-shadow:0 4px 4px rgba(0,0,0,.12);box-shadow:0 4px 4px rgba(0,0,0,.12);z-index:1}h1{font-size:34px;font-weight:400;margin:0;float:left}a[rel=author]{font-size:16px;color:hsla(0,0%,100%,.7);padding:8px;float:right}main{padding:16px}h2{margin:16px 0}.label,label{font-size:12px;color:rgba(0,0,0,.54)}input{margin-bottom:16px}#message{display:block;font-size:16px;height:32px;max-width:calc(100% - 32px);margin-bottom:0;text-transform:uppercase}#cards{position:relative;background-color:#4caf50;border-radius:4px;-webkit-box-shadow:0 4px 4px rgba(0,0,0,.2);box-shadow:0 4px 4px rgba(0,0,0,.2)}.cleanednotification{-webkit-transition:opacity .2s ease-in-out,-webkit-transform .2s ease-in;transition:opacity .2s ease-in-out,-webkit-transform .2s ease-in;transition:opacity .2s ease-in-out,transform .2s ease-in;transition:opacity .2s ease-in-out,transform .2s ease-in,-webkit-transform .2s ease-in;margin:4px 0 12px;color:#ff1744;font-size:12px}.hide{-webkit-transform:translateY(-12px);transform:translateY(-12px);opacity:0}.cleaned{margin-left:8px;font-family:monospace;color:#448;text-transform:uppercase;background-color:#eee}article{width:30em;max-width:100%}</style></head>
 <body>
   <header>
     <h1>Codeck</h1>
@@ -116,15 +28,8 @@
         Not all characters can be encoded. The actual encoded message is
         <samp class="cleaned"></samp>
       </p>
-      <span class="label">Encoded Message</span>
+      <span class="label">Encoded Message (Drag cards to change)</span>
       <div id="cards">
-        <svg>
-          <defs>
-            <filter id="shadow">
-              <feDropShadow dx="4" dy="8" stdDeviation="4" />
-            </filter>
-          </defs>
-        </svg>
       </div>
     </form>
 
@@ -164,12 +69,10 @@
     <p>This gives us the following formula to solve for <i>l</i>:</p>
     <code>52! ≥ 39<sup>l</sup></code>
     <p>
-      Using basic logarithms, this equation can be solved for l, giving us a
-      maximum length of 42 characters. You can figure this on a calculator by
-      typing in <code>log(52!)/log(39)</code> or asking Siri, "What's the log
-      of 52 factorial divided by the log of 39?" The answer will be about
-      42.68, which rounds down to 42, since it doesn't make sense to encode part
-      of a character.
+      This equation can be solved for l by asking Siri, "What's the log of 52
+      factorial divided by the log of 39?" The answer will be about 42.68, which
+      rounds down to a maximum length of 42 characters, since it doesn't make
+      sense to encode part of a character.
     </p>
 
     <h3>Why is it named Codeck?</h3>
