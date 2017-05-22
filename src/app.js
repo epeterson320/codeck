@@ -158,12 +158,10 @@ function showCardsInit () {
   renderCards()
 }
 
-setTimeout(showCardsInit, 25)
-
-/*
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('worker.js')
   })
 }
-*/
+
+showCardsInit()
