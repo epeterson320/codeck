@@ -1,0 +1,184 @@
+.card {
+  position: absolute;
+  background-image: url('images/cards.png');
+  width: 36px;
+  height: 54px;
+  margin: 2px;
+  display: inline-block;
+
+  @media screen and (resolution: 2x) {
+    background-image: url('images/cards@2x.png');
+  }
+
+  @media screen and (resolution: 3x) {
+    background-image: url('images/cards@3x.png');
+  }
+}
+
+.drag {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+}
+
+// Spades
+.sa {
+  background-position: 0 0;
+}
+.s2 {
+  background-position: -39px 0;
+}
+.s3 {
+  background-position: -78px 0;
+}
+.s4 {
+  background-position: -117px 0;
+}
+.s5 {
+  background-position: -156px 0;
+}
+.s6 {
+  background-position: -195px 0;
+}
+.s7 {
+  background-position: -234px 0;
+}
+.s8 {
+  background-position: -273px 0;
+}
+.s9 {
+  background-position: -312px 0;
+}
+.s10 {
+  background-position: -351px 0;
+}
+.sj {
+  background-position: -390px 0;
+}
+.sq {
+  background-position: -429px 0;
+}
+.sk {
+  background-position: -468px 0;
+}
+
+// Hearts
+.ha {
+  background-position: 0 -57px;
+}
+.h2 {
+  background-position: -39px -57px;
+}
+.h3 {
+  background-position: -78px -57px;
+}
+.h4 {
+  background-position: -117px -57px;
+}
+.h5 {
+  background-position: -156px -57px;
+}
+.h6 {
+  background-position: -195px -57px;
+}
+.h7 {
+  background-position: -234px -57px;
+}
+.h8 {
+  background-position: -273px -57px;
+}
+.h9 {
+  background-position: -312px -57px;
+}
+.h10 {
+  background-position: -351px -57px;
+}
+.hj {
+  background-position: -390px -57px;
+}
+.hq {
+  background-position: -429px -57px;
+}
+.hk {
+  background-position: -468px -57px;
+}
+
+// Diamonds
+.da {
+  background-position: 0 -114px;
+}
+.d2 {
+  background-position: -39px -114px;
+}
+.d3 {
+  background-position: -78px -114px;
+}
+.d4 {
+  background-position: -117px -114px;
+}
+.d5 {
+  background-position: -156px -114px;
+}
+.d6 {
+  background-position: -195px -114px;
+}
+.d7 {
+  background-position: -234px -114px;
+}
+.d8 {
+  background-position: -273px -114px;
+}
+.d9 {
+  background-position: -312px -114px;
+}
+.d10 {
+  background-position: -351px -114px;
+}
+.dj {
+  background-position: -390px -114px;
+}
+.dq {
+  background-position: -429px -114px;
+}
+.dk {
+  background-position: -468px -114px;
+}
+
+// Clubs
+.ca {
+  background-position: 0 -171px;
+}
+.c2 {
+  background-position: -39px -171px;
+}
+.c3 {
+  background-position: -78px -171px;
+}
+.c4 {
+  background-position: -117px -171px;
+}
+.c5 {
+  background-position: -156px -171px;
+}
+.c6 {
+  background-position: -195px -171px;
+}
+.c7 {
+  background-position: -234px -171px;
+}
+.c8 {
+  background-position: -273px -171px;
+}
+.c9 {
+  background-position: -312px -171px;
+}
+.c10 {
+  background-position: -351px -171px;
+}
+.cj {
+  background-position: -390px -171px;
+}
+.cq {
+  background-position: -429px -171px;
+}
+.ck {
+  background-position: -468px -171px;
+}

@@ -1,21 +1,28 @@
-import {
-  select,
-  event as currentEvent
-} from 'd3-selection'
+import { select, event as currentEvent } from 'd3-selection'
 import { drag } from 'd3-drag'
 import 'd3-transition' // defines selection.transition()
-
 import Codeck from './Codeck'
+
+import '../styles/main.scss'
 
 const { floor } = Math
 const codeck = new Codeck()
 
-const width = Math.min(512, window.innerWidth - 32)
-const height = 400
+// These values should be matched in .scss files
+const pageMargin = 16
+const margin = 4
+const maxWidth = Math.min(512, window.innerWidth - 2 * pageMargin)
+const cardWidth = 40
+const cardHeight = 60
 
-const svg = select('#cards svg')
-  .attr('width', width)
-  .attr('height', height)
+const nCols = Math.floor((maxWidth - 2 * margin) / cardWidth)
+const nRows = Math.ceil(codeck.deck.length / nCols)
+const height = nRows * cardHeight + 2 * margin
+const width = nCols * cardWidth + 2 * margin
+
+const cardsDiv = select('#cards')
+  .style('width', `${width}px`)
+  .style('height', `${height}px`)
 
 const messageInput = select('#message')
 const cleanedMessageSpan = select('.cleanednotification')
@@ -37,14 +44,14 @@ messageInput.on('keyup', () => {
 })
 
 function cleanMessage (text) {
-  return text.toUpperCase().trim()
+  return text
     .replace(/[!?]+/g, '.') // replace !, ?, !!, or !?!?! with a single period.
     .replace(/[^A-Z0-9,. ]/g, '')
 }
 
 function updateMessage () {
-  const typedMessage = messageInput.node().value
-  const cleanedMessage = cleanMessage(messageInput.node().value)
+  const typedMessage = messageInput.node().value.toUpperCase().trim()
+  const cleanedMessage = cleanMessage(typedMessage)
   const newOrder = codeck.encode(cleanedMessage.toLowerCase())
   newOrder.forEach((cardKey, i) => {
     cardOrder[i] = cardKey
@@ -63,8 +70,8 @@ function updateMessage () {
 
 function moveCard (card, di) {
   if (card.idx + di >= cardOrder.length || card.idx + di < 0) return false
-  if (card.idx % 9 === 8 && di === 1) return false
-  if (card.idx % 9 === 0 && di === -1) return false
+  if (card.idx % nCols === nCols - 1 && di === 1) return false
+  if (card.idx % nCols === 0 && di === -1) return false
 
   if (di > 0) {
     for (let i = card.idx; i < card.idx + di; i++) {
@@ -84,51 +91,52 @@ function moveCard (card, di) {
 }
 
 function renderCards () {
-  svg.selectAll('.card').transition()
+  cardsDiv.selectAll('.card').transition()
     .delay(d => d.idx * 5)
     .filter(d => !d.dragging)
-    .attr('transform', d =>
-      `translate(${d.idx % 9 * 48 + d.dx}, ${floor(d.idx / 9) * 60 + d.dy + 4})`)
+    .style('left', d => `${d.idx % nCols * cardWidth + d.dx + margin}px`)
+    .style('top', d => `${floor(d.idx / nCols) * cardHeight + d.dy + margin}px`)
 }
 
 function dragstarted (d) {
   d.dragging = true
   currentEvent.sourceEvent.preventDefault()
   select(this)
-    .style('filter', 'url(#shadow)')
+    .classed('drag', true)
     .raise()
 }
 
 function dragged (d) {
   d.dx += currentEvent.dx
   d.dy += currentEvent.dy
-  if (d.dx > 28) {
-    d.dx -= 48
+  if (d.dx > cardWidth / 2) {
+    d.dx -= cardWidth
     const moved = moveCard(d, 1)
-    if (!moved) d.dx += 48
-  } else if (d.dx < -28) {
-    d.dx += 48
+    if (!moved) d.dx += cardWidth
+  } else if (d.dx < -cardWidth / 2) {
+    d.dx += cardWidth
     const moved = moveCard(d, -1)
-    if (!moved) d.dx -= 48
+    if (!moved) d.dx -= cardWidth
   }
-  if (d.dy > 34) {
-    d.dy -= 60
-    const moved = moveCard(d, 9)
-    if (!moved) d.dy += 60
-  } else if (d.dy < -34) {
-    d.dy += 60
-    const moved = moveCard(d, -9)
-    if (!moved) d.dy -= 60
+  if (d.dy > cardHeight / 2) {
+    d.dy -= cardHeight
+    const moved = moveCard(d, nCols)
+    if (!moved) d.dy += cardHeight
+  } else if (d.dy < -cardHeight / 2) {
+    d.dy += cardHeight
+    const moved = moveCard(d, -nCols)
+    if (!moved) d.dy -= cardHeight
   }
-  select(this).attr('transform', d =>
-    `translate(${d.idx % 9 * 48 + d.dx}, ${floor(d.idx / 9) * 60 + d.dy})`)
+  select(this)
+    .style('left', d => `${d.idx % nCols * cardWidth + d.dx + margin}px`)
+    .style('top', d => `${floor(d.idx / nCols) * cardHeight + d.dy + margin}px`)
 }
 
 function dragended (d) {
   d.dx = 0
   d.dy = 0
   d.dragging = false
-  select(this).style('filter', null)
+  select(this).classed('drag', false)
   renderCards()
   const message = codeck.decode(cardOrder)
   messageInput.node().value = message.trim().toUpperCase()
@@ -136,24 +144,13 @@ function dragended (d) {
 }
 
 function showCardsInit () {
-  svg.selectAll('.card')
+  cardsDiv.selectAll('.card')
     .data(Object.values(cards), card => card.key)
-    .enter().append('g')
-      .attr('class', 'card')
-      .attr('transform', 'translate(0, 0)')
-      .each(function () {
-        const g = select(this)
-        g.append('rect')
-          .attr('fill', 'white')
-          .attr('x', '3px')
-          .attr('y', '1px')
-          .style('width', 36)
-          .style('height', 46)
-        g.append('text')
-          .text(card => card.key)
-          .attr('y', 40)
-          .attr('fill', d => (floor(d.idx / 13) % 2 !== 0) ? 'red' : 'black')
-      })
+    .enter().append('div')
+      .classed('card', true)
+      .style('top', '0')
+      .style('left', '0')
+      .each(function (d) { select(this).classed(d.key, true) })
       .call(drag()
         .on('start', dragstarted)
         .on('drag', dragged)
@@ -163,8 +160,10 @@ function showCardsInit () {
 
 setTimeout(showCardsInit, 25)
 
+/*
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('worker.js')
   })
 }
+*/
