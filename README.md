@@ -19,6 +19,10 @@ transformation of text to and from an ordered deck of cards.
   put my above-the-fold CSS in the HTML `<head>` element, and webpack is just
   awesome in general.
 
+## Try it Online
+
+https://www.ericp.co/codeck
+
 ## Implementation
 
 The encoding process is
