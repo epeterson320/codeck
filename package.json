@@ -1,5 +1,5 @@
 {
-  "name": "Codeck",
+  "name": "codeck",
   "version": "1.0.0",
   "description": "Encode text into a deck of cards",
   "main": "index.js",
