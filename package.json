@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "vite build",
+    "postbuild": "cp -r images dist",
     "start": "vite",
     "test": "vitest"
   },
