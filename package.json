@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "vite build",
-    "postbuild": "cp -r src/worker.js images dist",
+    "postbuild": "cp -r src/worker.js images dist/assets",
     "start": "vite",
     "test": "vitest"
   },
